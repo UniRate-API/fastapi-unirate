@@ -1,0 +1,40 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --all-groups --python ${{ matrix.python-version }}
+
+      - name: Lint
+        run: |
+          uv run --group lint ruff check fastapi_unirate tests
+          uv run --group lint ruff format fastapi_unirate tests --diff
+
+      - name: Type check
+        run: uv run --group typing mypy fastapi_unirate tests
+
+      - name: Run unit tests
+        run: uv run --group test pytest tests/ -v

@@ -1,0 +1,82 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fastapi-unirate"
+version = "0.1.0"
+description = "FastAPI integration for the UniRate currency-exchange API — async dependency, lifespan manager, Money Pydantic type, and response-conversion middleware."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Unirate Team" }]
+keywords = [
+    "fastapi",
+    "unirate",
+    "currency",
+    "exchange-rates",
+    "forex",
+    "money",
+    "fintech",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: FastAPI",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Office/Business :: Financial",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "fastapi>=0.100,<2.0",
+    "httpx>=0.25,<1.0",
+    "pydantic>=2.0,<3.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/UniRate-API/fastapi-unirate"
+Repository = "https://github.com/UniRate-API/fastapi-unirate"
+Issues = "https://github.com/UniRate-API/fastapi-unirate/issues"
+Provider = "https://unirateapi.com"
+
+[dependency-groups]
+test = [
+    "pytest>=8.0,<9.0",
+    "pytest-asyncio>=0.23,<2.0",
+    "respx>=0.20,<1.0",
+]
+lint = [
+    "ruff>=0.6,<1.0",
+]
+typing = [
+    "mypy>=1.10,<2.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["fastapi_unirate"]
+
+[tool.ruff]
+target-version = "py39"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "RUF"]
+
+[tool.mypy]
+python_version = "3.9"
+disallow_untyped_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+asyncio_mode = "auto"
